@@ -527,6 +527,11 @@ do
 	fi
 	nextInputFilename="smInMask_"${nextInputFilename}
 
+        pushd ${subjfMRIDIR}
+     #   3dAFNItoNIFTI -prefix ${nextInputFilename} ${nextInputFilename}+tlrc
+     #    3dAFNItoNIFTI -prefix yestACS_${nextInputFilename} yestACS_${nextInputFilename}+tlrc
+     #    3dAFNItoNIFTI -prefix notACS${nextInputFilename} notACS_${nextInputFilename}+tlrc
+         popd
 
         ## Split data into notACS and yestACS
         execute=0
@@ -548,6 +553,7 @@ do
 
             popd
         fi
+
 
         execute=0
         if [ $execute -eq 1 ]; then
@@ -769,7 +775,7 @@ if [ $execute -eq 1 ]; then
 fi
 
 # Run 3dClustSim
-execute=1
+execute=0
 if [ $execute -eq 1 ]; then
     
     datadir=${basedir}/data/
@@ -784,7 +790,7 @@ fi
 
 
 # Volume to Surface Mapping of Results
-execute=1
+execute=0
 if [ $execute -eq 1 ]; then
 
     datadir=${basedir}/data/
@@ -807,4 +813,686 @@ if [ $execute -eq 1 ]; then
     wb_command -volume-to-surface-mapping Clust_nostim_leftVright_v2_mask.nii ${surfaceatlas}/Conte69.R.midthickness.32k_fs_LR.surf.gii workbench_dir/Clust_nostim_leftVright_v2_mask_R.shape.gii -trilinear 
     
     
+fi
+
+
+execute=0
+if [ $execute -eq 1 ]; then
+    echo "-Running T-Tests against 0 for each connectivity map (to run union versus intersection analysis)-"
+    
+    datadir=${basedir}/data/
+    analdir=fMRI/tacs_motionadaptationAnalysis
+    pushd $datadir/results/
+
+    3dttest++ -DAFNI_FLOATIZE=YES -setA ${datadir}/038/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+    -prefix stim_leftMT_ttest_against0_n10 -overwrite
+
+
+    3dttest++ -DAFNI_FLOATIZE=YES -setA ${datadir}/038/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+    -prefix nostim_leftMT_ttest_against0_n10 -overwrite
+
+    3dttest++ -DAFNI_FLOATIZE=YES -setA ${datadir}/038/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+    -prefix stim_rightMT_ttest_against0_n10 -overwrite
+
+
+    3dttest++ -DAFNI_FLOATIZE=YES -setA ${datadir}/038/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+    -prefix nostim_rightMT_ttest_against0_n10 -overwrite
+
+fi
+
+# Now take intersection of no stimulated connectivity maps between left and right MT seeds
+execute=0
+if [ $execute -eq 1 ]; then
+
+    datadir=${basedir}/data/
+    analdir=fMRI/tacs_motionadaptationAnalysis
+    pushd $datadir/results/
+    
+    3dcalc -a nostim_leftMT_sigclusters_n10_mask+tlrc -b nostim_rightMT_sigclusters_n10_mask+tlrc -expr 'a*b' -prefix nostim_lrMT_sigclusters_intersection_n10+tlrc
+    3dcalc -a nostim_leftMT_sigclusters_n10_mask+tlrc -b nostim_rightMT_sigclusters_n10_mask+tlrc -expr 'ispositive(a+b)' -prefix nostim_lrMT_sigclusters_union_n10+tlrc
+
+fi
+
+# Now get average timeseries for each of the clusters in the intersection mask
+execute=0
+if [ $execute -eq 1 ]; then
+    
+    datadir=${basedir}/data/
+    pushd $datadir/results/
+    
+    for subjNum in $listOfSubjects
+    do
+	subjDir=${basedir}/data/${subjNum}/
+	subjfMRIDIR=${subjDir}/fMRI/
+	subjAnalysisDIR=${subjfMRIDIR}/${ANALYSISNAME}Analysis
+        pushd ${subjfMRIDIR}
+
+        echo "Running 3dmaskave on subject ${subjNum}"
+        for i in {1..6}
+        do
+            3dmaskave -quiet -mask ${datadir}/results/nostim_lrMT_sigclusters_intersection_n10_v2_mask+tlrc -mrange ${i} ${i} \
+                ${subjfMRIDIR}/notACS_smInMask_resid2_tACSreg_stc_epi_short_allruns_tlrc_al+tlrc > ${subjAnalysisDIR}/cluster${i}_notACS_timeseries.1D
+            3dmaskave -quiet -mask ${datadir}/results/nostim_lrMT_sigclusters_intersection_n10_v2_mask+tlrc -mrange ${i} ${i} \
+                ${subjfMRIDIR}/yestACS_smInMask_resid2_tACSreg_stc_epi_short_allruns_tlrc_al+tlrc > ${subjAnalysisDIR}/cluster${i}_yestACS_timeseries.1D
+
+        done
+    done
+fi
+
+
+# Run ANOVA on union
+execute=0
+if [ $execute -eq 1 ]; then
+
+    echo "-Running ANOVA-"
+    
+    datadir=${basedir}/data/
+    analdir=fMRI/tacs_motionadaptationAnalysis
+    pushd $datadir/results/
+
+    3dANOVA3 -DAFNI_FLOATIZE=YES -type 4 -alevels 2 -blevels 2 -clevels 10 \
+        -mask ${datadir}/results/nostim_lrMT_sigclusters_union_n10+tlrc \
+        -dset 1 1 1 ${datadir}/038/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 1 ${datadir}/038/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 1 ${datadir}/038/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 1 ${datadir}/038/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 2 ${datadir}/069/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 2 ${datadir}/069/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 2 ${datadir}/069/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 2 ${datadir}/069/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 3 ${datadir}/141/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 3 ${datadir}/141/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 3 ${datadir}/141/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 3 ${datadir}/141/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 4 ${datadir}/172/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 4 ${datadir}/172/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 4 ${datadir}/172/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 4 ${datadir}/172/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 5 ${datadir}/173/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 5 ${datadir}/173/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 5 ${datadir}/173/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 5 ${datadir}/173/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 6 ${datadir}/177/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 6 ${datadir}/177/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 6 ${datadir}/177/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 6 ${datadir}/177/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 7 ${datadir}/178/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 7 ${datadir}/178/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 7 ${datadir}/178/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 7 ${datadir}/178/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 8 ${datadir}/083/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 8 ${datadir}/083/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 8 ${datadir}/083/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 8 ${datadir}/083/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 9 ${datadir}/144/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 9 ${datadir}/144/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 9 ${datadir}/144/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 9 ${datadir}/144/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 10 ${datadir}/170/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 10 ${datadir}/170/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 10 ${datadir}/170/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 10 ${datadir}/170/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -fa maineffect_stimulation -fb maineffect_leftright -fab interaction_stimLR \
+        -amean 1 Stimulation -amean 2 NoStimulation -bmean 1 Left -bmean 2 Right \
+        -adiff 1 2 diff_Stim_V_NoStim -bdiff 1 2 diff_Left_V_Right \
+        -bucket ANOVA_stimulation_LR_subjN10_lrMTunion_v2 -overwrite
+
+    # Try intersection data set
+    3dANOVA3 -DAFNI_FLOATIZE=YES -type 4 -alevels 2 -blevels 2 -clevels 10 \
+        -mask ${datadir}/results/nostim_lrMT_sigclusters_intersection_n10+tlrc \
+        -dset 1 1 1 ${datadir}/038/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 1 ${datadir}/038/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 1 ${datadir}/038/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 1 ${datadir}/038/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 2 ${datadir}/069/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 2 ${datadir}/069/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 2 ${datadir}/069/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 2 ${datadir}/069/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 3 ${datadir}/141/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 3 ${datadir}/141/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 3 ${datadir}/141/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 3 ${datadir}/141/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 4 ${datadir}/172/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 4 ${datadir}/172/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 4 ${datadir}/172/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 4 ${datadir}/172/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 5 ${datadir}/173/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 5 ${datadir}/173/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 5 ${datadir}/173/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 5 ${datadir}/173/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 6 ${datadir}/177/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 6 ${datadir}/177/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 6 ${datadir}/177/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 6 ${datadir}/177/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 7 ${datadir}/178/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 7 ${datadir}/178/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 7 ${datadir}/178/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 7 ${datadir}/178/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 8 ${datadir}/083/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 8 ${datadir}/083/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 8 ${datadir}/083/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 8 ${datadir}/083/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 9 ${datadir}/144/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 9 ${datadir}/144/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 9 ${datadir}/144/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 9 ${datadir}/144/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 1 1 10 ${datadir}/170/${analdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 1 2 10 ${datadir}/170/${analdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+        -dset 2 1 10 ${datadir}/170/${analdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+        -dset 2 2 10 ${datadir}/170/${analdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+        -fa maineffect_stimulation -fb maineffect_leftright -fab interaction_stimLR \
+        -amean 1 Stimulation -amean 2 NoStimulation -bmean 1 Left -bmean 2 Right \
+        -adiff 1 2 diff_Stim_V_NoStim -bdiff 1 2 diff_Left_V_Right \
+        -bucket ANOVA_stimulation_LR_subjN10_lrMTintersection_v2 -overwrite
+    
+    
+    3dClustSim -mask ANOVA_stimulation_LR_subjN10_lrMTintersection_v2+tlrc -fwhm 6 -prefix 3dclustsim_ANOVA_intersection
+    popd
+fi
+
+
+#################################
+## 11/6/15
+## Taku Ito
+## By request from Kohitij: 3-way ANOVA, 2 fixed-effects: stimulation X time (with lMT connectivity)
+# Run ANOVA on stimulation v time
+execute=0
+if [ $execute -eq 1 ]; then
+
+    for subjNum in $listOfSubjects
+    do
+	#--Single subject directory setup--
+	subjDir=${basedir}/data/${subjNum}/
+		if [ "`ls -d $subjDir`" == "" ]; then mkdir $subjDir; fi	#Making directory if it doesn't exist yet
+	subjRawDataDIR=${basedir}/data/rawdata/${subjNum}/
+	subjfMRIDIR=${subjDir}/fMRI/
+		if [ "`ls -d $subjfMRIDIR`" == "" ]; then mkdir $subjfMRIDIR; fi	#Making directory if it doesn't exist yet
+	subjMaskDIR=${subjDir}/masks/
+		if [ "`ls -d $subjMaskDIR`" == "" ]; then mkdir $subjMaskDIR; fi	#Making directory if it doesn't exist yet
+	subjAnalysisDIR=${subjfMRIDIR}/${ANALYSISNAME}Analysis
+		if [ "`ls -d $subjAnalysisDIR`" == "" ]; then mkdir $subjAnalysisDIR; fi	#Making directory if it doesn't exist yet
+	StimFileDir=${basedir}/data/${subjNum}/sdm/
+		#if [ "`ls -d $StimFileDir`" == "" ]; then mkdir $StimFileDir; fi	#Making directory if it doesn't exist yet
+	FreesurferDir=${basedir}/data/freesurfer/
+		if [ "`ls -d $FreesurferDir`" == "" ]; then mkdir $FreesurferDir; fi	#Making directory if it doesn't exist yet
+	scriptDIR=${basedir}/docs/scripts/
+	atlasDIR=${basedir}/data/atlases/
+
+        pushd ${subjAnalysisDIR}
+
+        echo "-Running seed-based correlation using left area MT on both stim and nostim conditions X with runs 1 and 2 split up-"
+        # Extract number of time points for each subjects runs
+        pushd ${subjfMRIDIR}
+        TRs1=`3dinfo -nv epi_short_r1+orig`
+        TRs2=`3dinfo -nv epi_short_r2+orig`
+        TRs3=`3dinfo -nv epi_short_r3+orig`
+        TRs4=`3dinfo -nv epi_short_r4+orig`
+        
+        TRs1start=$(expr $TRs1 - 1) # Since AFNI counts from 0
+        TRs3start=$(expr $TRs3 - 1)
+        popd
+        echo "$TRs1; $TRs1start"
+
+        outdir=${basedir}/data/results/4WayANOVAMats_STIMxHEMIxTIMExSUBJ/STIMxTIMExSUBJANOVA_wholebrain/
+        3dTcorr1D -pearson -overwrite -prefix ${outdir}/${subjNum}_nostim_lMT_corrbucket_run1_v1 ${subjfMRIDIR}/notACS_${nextInputFilename}+tlrc[0..$TRs1start] nostim_leftAreaMT_v2.1D{0..$TRs1start}
+        3dTcorr1D -pearson -overwrite -prefix ${outdir}/${subjNum}_nostim_lMT_corrbucket_run2_v1 ${subjfMRIDIR}/notACS_${nextInputFilename}+tlrc[$TRs1..$] nostim_leftAreaMT_v2.1D{$TRs1..$}
+        3dTcorr1D -pearson -overwrite -prefix ${outdir}/${subjNum}_stim_lMT_corrbucket_run1_v1 ${subjfMRIDIR}/yestACS_${nextInputFilename}+tlrc[0..$TRs3start] stim_leftAreaMT_v2.1D{0..$TRs3start}
+        3dTcorr1D -pearson -overwrite -prefix ${outdir}/${subjNum}_stim_lMT_corrbucket_run2_v1 ${subjfMRIDIR}/yestACS_${nextInputFilename}+tlrc[$TRs3..$] stim_leftAreaMT_v2.1D{$TRs3..$}
+
+        echo "-Run FisherZ transform on data-"
+        3dcalc -a ${outdir}/${subjNum}_nostim_lMT_corrbucket_run1_v1+tlrc -expr 'atanh(a)' -prefix ${outdir}/${subjNum}_fz_nostim_lMT_corrbucket_run1_v1 -overwrite
+        3dcalc -a ${outdir}/${subjNum}_nostim_lMT_corrbucket_run2_v1+tlrc -expr 'atanh(a)' -prefix ${outdir}/${subjNum}_fz_nostim_lMT_corrbucket_run2_v1 -overwrite
+        3dcalc -a ${outdir}/${subjNum}_stim_lMT_corrbucket_run1_v1+tlrc -expr 'atanh(a)' -prefix ${outdir}/${subjNum}_fz_stim_lMT_corrbucket_run1_v1 -overwrite
+        3dcalc -a ${outdir}/${subjNum}_stim_lMT_corrbucket_run2_v1+tlrc -expr 'atanh(a)' -prefix ${outdir}/${subjNum}_fz_stim_lMT_corrbucket_run2_v1 -overwrite
+
+        popd
+
+    done
+fi
+
+execute=0
+if [ $execute -eq 1 ]; then
+    echo "-Running ANOVA-"
+    
+    datadir=${basedir}/data/
+    analdir=fMRI/tacs_motionadaptationAnalysis
+    outdir=${basedir}/data/results/4WayANOVAMats_STIMxHEMIxTIMExSUBJ/STIMxTIMExSUBJANOVA_wholebrain/
+    pushd $outdir
+    
+    3dresample -orient LPI -rmode NN -overwrite -prefix Kohitij_adapted_voxels_resampled -inset Kohitij_adapted_voxels.nii
+
+    3dANOVA3 -DAFNI_FLOATIZE=YES -type 4 -alevels 2 -blevels 2 -clevels 10 \
+        -mask ${outdir}/Kohitij_adapted_voxels_qw_resampled+tlrc \
+        -dset 1 1 1 ${outdir}/038_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 1 ${outdir}/038_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 1 ${outdir}/038_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 1 ${outdir}/038_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 2 ${outdir}/069_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 2 ${outdir}/069_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 2 ${outdir}/069_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 2 ${outdir}/069_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 3 ${outdir}/141_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 3 ${outdir}/141_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 3 ${outdir}/141_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 3 ${outdir}/141_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 4 ${outdir}/172_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 4 ${outdir}/172_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 4 ${outdir}/172_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 4 ${outdir}/172_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 5 ${outdir}/173_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 5 ${outdir}/173_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 5 ${outdir}/173_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 5 ${outdir}/173_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 6 ${outdir}/177_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 6 ${outdir}/177_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 6 ${outdir}/177_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 6 ${outdir}/177_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 7 ${outdir}/178_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 7 ${outdir}/178_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 7 ${outdir}/178_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 7 ${outdir}/178_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 8 ${outdir}/083_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 8 ${outdir}/083_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 8 ${outdir}/083_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 8 ${outdir}/083_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 9 ${outdir}/144_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 9 ${outdir}/144_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 9 ${outdir}/144_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 9 ${outdir}/144_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 1 1 10 ${outdir}/170_fz_stim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 1 2 10 ${outdir}/170_fz_stim_lMT_corrbucket_run2_v1+tlrc \
+        -dset 2 1 10 ${outdir}/170_fz_nostim_lMT_corrbucket_run1_v1+tlrc \
+        -dset 2 2 10 ${outdir}/170_fz_nostim_lMT_corrbucket_run2_v1+tlrc \
+        -fa maineffect_stimulation -fb maineffect_run -fab interaction_stimXrun \
+        -amean 1 Stimulation -amean 2 NoStimulation -bmean 1 Run1 -bmean 2 Run2 \
+        -adiff 1 2 diff_Stim_V_NoStim -bdiff 1 2 diff_Run1_V_Run2 \
+        -bucket ${outdir}/ANOVA_stimulationXrun_subjN10_lMTfc_masked_v2 -overwrite
+
+fi
+
+execute=0
+if [ $execute -eq 1 ]; then
+    
+    outdir=${basedir}/data/results/4WayANOVAMats_STIMxHEMIxTIMExSUBJ/STIMxTIMExSUBJANOVA_wholebrain/
+    # Analysis to plot out the different correlations of the significant cluster from the stimXtime interaction effect ANOVA
+    for subjNum in $listOfSubjects
+    do
+        subjdir=${basedir}/data/${subjNum}/fMRI/
+        pushd ${subjdir}
+        TRs1=`3dinfo -nv ${subjdir}/epi_short_r1+orig`
+        TRs2=`3dinfo -nv ${subjdir}/epi_short_r2+orig`
+        TRs3=`3dinfo -nv ${subjdir}/epi_short_r3+orig`
+        TRs4=`3dinfo -nv ${subjdir}/epi_short_r4+orig`
+        
+        TRs1start=$(expr $TRs1 - 1) # Since AFNI counts from 0
+        TRs3start=$(expr $TRs3 - 1)
+        popd
+        echo "${subjNum}"
+        echo "${TRs1}; ${TRs1start}; ${TRs3}; ${TRs3start}"
+        pushd $outdir
+        3dmaskave -quiet -mask Clust_stimXtime_interaction_clust_mask+tlrc ${subjdir}/notACS_smInMask_resid2_tACSreg_stc_epi_short_allruns_tlrc_al+tlrc[0..$TRs1start] > interactionEffect_sigClust_timeseries/${subjNum}_nostimXrun1_stimXtime_interactioneffect_clust.1D
+        3dmaskave -quiet -mask Clust_stimXtime_interaction_clust_mask+tlrc ${subjdir}/notACS_smInMask_resid2_tACSreg_stc_epi_short_allruns_tlrc_al+tlrc[$TRs1..$] > interactionEffect_sigClust_timeseries/${subjNum}_nostimXrun2_stimXtime_interactioneffect_clust.1D
+        3dmaskave -quiet -mask Clust_stimXtime_interaction_clust_mask+tlrc ${subjdir}/yestACS_smInMask_resid2_tACSreg_stc_epi_short_allruns_tlrc_al+tlrc[0..$TRs3start] > interactionEffect_sigClust_timeseries/${subjNum}_stimXrun1_stimXtime_interactioneffect_clust.1D
+        3dmaskave -quiet -mask Clust_stimXtime_interaction_clust_mask+tlrc ${subjdir}/yestACS_smInMask_resid2_tACSreg_stc_epi_short_allruns_tlrc_al+tlrc[$TRs3..$] > interactionEffect_sigClust_timeseries/${subjNum}_stimXrun2_stimXtime_interactioneffect_clust.1D
+        popd
+ 
+    done
+fi
+
+
+
+
+# 1. Take the lMT stim v no-stim maps and subtract fz correlation values (for each subject)
+# 2. Take the rMT stim v no-stim maps and subtract fz correlation values (for each subject).
+# 3. Take the t-test of these differences lMT stimVnostim against rMT stimVnostim (across subjects).
+# Hypothesis: if there is a significant difference with lMT > rMT, then it shows that the stimulation is 
+# Preferentially affecting FC with lMT regions more than rMT regions
+execute=0
+if [ $execute -eq 1 ]; then
+
+    for subjNum in $listOfSubjects
+    do
+	subjDir=${basedir}/data/${subjNum}/
+	subjfMRIDIR=${subjDir}/fMRI/
+	subjAnalysisDIR=${subjfMRIDIR}/${ANALYSISNAME}Analysis
+        pushd ${subjfMRIDIR}
+        3dcalc -a ${subjAnalysisDIR}/fz_stim_leftareaMT_corrbucket_v2+tlrc -b ${subjAnalysisDIR}/fz_nostim_leftareaMT_corrbucket_v2+tlrc \
+            -expr 'a-b' -prefix ${subjAnalysisDIR}/fz_stim_minus_nostim_lMT_corrmap_v2
+
+        3dcalc -a ${subjAnalysisDIR}/fz_stim_rightareaMT_corrbucket_v2+tlrc -b ${subjAnalysisDIR}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+            -expr 'a-b' -prefix ${subjAnalysisDIR}/fz_stim_minus_nostim_rMT_corrmap_v2
+
+        3dcalc -a ${subjAnalysisDIR}/fz_stim_leftareaMT_corrbucket_v2+tlrc -b ${subjAnalysisDIR}/fz_stim_rightareaMT_corrbucket_v2+tlrc \
+            -expr 'a-b' -prefix ${subjAnalysisDIR}/fz_lMT_minus_rMT_stim_corrmap_v2
+
+        3dcalc -a ${subjAnalysisDIR}/fz_nostim_leftareaMT_corrbucket_v2+tlrc -b ${subjAnalysisDIR}/fz_nostim_rightareaMT_corrbucket_v2+tlrc \
+            -expr 'a-b' -prefix ${subjAnalysisDIR}/fz_lMT_minus_rMT_nostim_corrmap_v2
+
+    done
+    
+    datadir=${basedir}/data/
+    analdir=fMRI/tacs_motionadaptationAnalysis
+
+    # Now run ttest 
+    3dttest++ -DAFNI_FLOATIZE=YES -setA ${datadir}/038/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -setB ${datadir}/038/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -prefix ${datadir}/results/lVrMT_stim_minus_nostim_ttest_n10_v2 -paired -overwrite
+
+    3dttest++ -DAFNI_FLOATIZE=YES -setA ${datadir}/038/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -setB ${datadir}/038/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -prefix ${datadir}/results/stimVnostim_lMT_minus_rMT_ttest_n10_v2 -paired -overwrite
+fi
+
+# Same analysis but on intersection mask
+execute=0
+if [ $execute -eq 1 ]; then
+    datadir=${basedir}/data/
+    analdir=fMRI/tacs_motionadaptationAnalysis
+    # Now run ttest 
+    3dttest++ -DAFNI_FLOATIZE=YES -mask ${datadir}/results/nostim_lrMT_sigclusters_intersection_n10_v2_mask+tlrc \
+    -setA ${datadir}/038/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -setB ${datadir}/038/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -prefix ${datadir}/results/lVrMT_stim_minus_nostim_ttest_intersection_mask_n10_v2 -paired -overwrite
+
+    3dttest++ -DAFNI_FLOATIZE=YES -mask ${datadir}/results/nostim_lrMT_sigclusters_union_n10+tlrc \
+    -setA ${datadir}/038/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -setB ${datadir}/038/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -prefix ${datadir}/results/lVrMT_stim_minus_nostim_ttest_union_mask_n10_v2 -paired -overwrite
+    
+    
+    3dttest++ -DAFNI_FLOATIZE=YES -mask ${datadir}/results/nostim_lrMT_sigclusters_intersection_n10+tlrc \
+    -setA ${datadir}/038/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -setB ${datadir}/038/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -prefix ${datadir}/results/stimVnostim_lMT_minus_rMT_ttest_intersection_n10_v2 -paired -overwrite
+
+    3dttest++ -DAFNI_FLOATIZE=YES -mask ${datadir}/results/nostim_lrMT_sigclusters_union_n10+tlrc \
+    -setA ${datadir}/038/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -setB ${datadir}/038/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -prefix ${datadir}/results/stimVnostim_lMT_minus_rMT_ttest_union_n10_v2 -paired -overwrite
+
+    3dttest++ -DAFNI_FLOATIZE=YES -mask ${datadir}/results/Kohitij_adapted_voxels_qw_resampled+tlrc \
+    -setA ${datadir}/038/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -setB ${datadir}/038/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/069/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/141/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/172/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/173/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/177/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/178/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/083/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/144/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    ${datadir}/170/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -prefix ${datadir}/results/stimVnostim_lMT_minus_rMT_ttest_adaptedROIsKohitij_n10_v2 -paired -overwrite
+fi
+
+
+# Run Wilcoxon test on correlation difference maps
+execute=0
+if [ $execute -eq 1 ];then
+
+    datadir=${basedir}/data/
+    analdir=fMRI/tacs_motionadaptationAnalysis
+    
+    # Now run ttest 
+    3dWilcoxon -dset 1 ${datadir}/038/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/069/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/141/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/172/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/173/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/177/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/178/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/083/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/144/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/170/${analdir}/fz_stim_minus_nostim_lMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/038/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/069/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/141/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/172/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/173/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/177/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/178/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/083/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/144/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/170/${analdir}/fz_stim_minus_nostim_rMT_corrmap_v2+tlrc \
+    -out ${datadir}/results/lVrMT_stim_minus_nostim_wilcoxon_n10_v2 
+
+    3dWilcoxon -dset 1 ${datadir}/038/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/069/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/141/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/172/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/173/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/177/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/178/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/083/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/144/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 1 ${datadir}/170/${analdir}/fz_lMT_minus_rMT_stim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/038/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/069/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/141/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/172/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/173/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/177/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/178/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/083/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/144/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -dset 2 ${datadir}/170/${analdir}/fz_lMT_minus_rMT_nostim_corrmap_v2+tlrc \
+    -out ${datadir}/results/stimVnostim_lMT_minus_rMT_wilcoxon_n10_v2 
+fi
+
+# Taku Ito; 11/19/15
+# Extract correlation values for all subjects 
+# for lVrMT_stim_minus_nostim_ttest cluster (insula)
+# also for left stim V no stim whole brain t-test
+execute=0
+if [ $execute -eq 1 ]; then
+    
+    outdir=${basedir}/data/results/
+    
+    # Remove files if they previously exist
+    pushd $outdir/lVrMT_stim_minus_nostim
+    rm -v lvrMT_stim_minus_nostim_corr_nostim_lMT.txt \
+        lvrMT_stim_minus_nostim_corr_nostim_rMT.txt \
+        lvrMT_stim_minus_nostim_corr_stim_lMT.txt \
+        lvrMT_stim_minus_nostim_corr_stim_rMT.txt
+    popd
+    pushd $outdir/l_stimVnoStim_ttest_v2
+    rm -v lMT_stimVnostim_corr_nostim_lMT_clust*.txt \
+        lMT_stimVnostim_corr_nostim_rMT_clust*.txt \
+        lMT_stimVnostim_corr_stim_lMT_clust*.txt \
+        lMT_stimVnostim_corr_stim_rMT_clust*.txt
+    popd
+
+    for subjNum in $listOfSubjects
+    do
+        subjdir=${basedir}/data/${subjNum}/fMRI/tacs_motionadaptationAnalysis/
+        
+        echo "${subjNum}"
+        pushd $outdir/lVrMT_stim_minus_nostim
+        3dmaskave -quiet -mask Clust_lVrMT_stim_minus_nostim_ttest_union_mask+tlrc ${subjdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc >> lvrMT_stim_minus_nostim_corr_nostim_lMT.txt
+        3dmaskave -quiet -mask Clust_lVrMT_stim_minus_nostim_ttest_union_mask+tlrc ${subjdir}/fz_nostim_rightareaMT_corrbucket_v2+tlrc >> lvrMT_stim_minus_nostim_corr_nostim_rMT.txt
+        3dmaskave -quiet -mask Clust_lVrMT_stim_minus_nostim_ttest_union_mask+tlrc ${subjdir}/fz_stim_leftareaMT_corrbucket_v2+tlrc >> lvrMT_stim_minus_nostim_corr_stim_lMT.txt
+        3dmaskave -quiet -mask Clust_lVrMT_stim_minus_nostim_ttest_union_mask+tlrc ${subjdir}/fz_stim_rightareaMT_corrbucket_v2+tlrc >> lvrMT_stim_minus_nostim_corr_stim_rMT.txt
+        popd
+
+        pushd $outdir/l_stimVnoStim_ttest_v2
+        for i in {1..9}
+        do
+            3dmaskave -quiet -mask ../Clust_l_stimVnoStim_v2_mask+tlrc -mrange ${i} ${i} \
+                ${subjdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc >> lMT_stimVnostim_corr_nostim_lMT_clust${i}.txt
+            3dmaskave -quiet -mask ../Clust_l_stimVnoStim_v2_mask+tlrc -mrange ${i} ${i} \
+                ${subjdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc >> lMT_stimVnostim_corr_nostim_rMT_clust${i}.txt
+            3dmaskave -quiet -mask ../Clust_l_stimVnoStim_v2_mask+tlrc -mrange ${i} ${i} \
+                ${subjdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc >> lMT_stimVnostim_corr_stim_lMT_clust${i}.txt
+            3dmaskave -quiet -mask ../Clust_l_stimVnoStim_v2_mask+tlrc -mrange ${i} ${i} \
+                ${subjdir}/fz_nostim_leftareaMT_corrbucket_v2+tlrc >> lMT_stimVnositm_corr_stim_rMT_clust${i}.txt
+        done
+        popd
+    done
+fi
+
+
+
+execute=0
+if [ $execute -eq 1 ]; then
+    
+    for subj in $listOfSubjects
+    do
+        basedir=/projects/Collaborations/KrekelbergCollaboration/MotionAdaptation_tACS_FC/
+        subjfMRIDIR=${basedir}/data/${subj}/fMRI
+        3dmaskave -quiet -mask ${basedir}/data/areaMT_Left_5mmrad+tlrc ${subjfMRIDIR}/${nextInputFilename}+tlrc > ${subjfMRIDIR}/leftAreaMT_5mmrad_v2.1D
+        3dmaskave -quiet -mask ${basedir}/data/areaMT_Right_5mmrad+tlrc ${subjfMRIDIR}/${nextInputFilename}+tlrc > ${subjfMRIDIR}/rightAreaMT_5mmrad_v2.1D
+    done
 fi
