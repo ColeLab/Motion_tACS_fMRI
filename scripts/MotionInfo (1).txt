@@ -1,0 +1,1 @@
+Mean, standard deviation, and absolute deviation of subject's motion in mm (left to right), by x,y,z direction (top to bottom):
