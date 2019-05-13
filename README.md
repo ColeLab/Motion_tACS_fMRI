@@ -1,5 +1,5 @@
 # Motion_tACS_fMRI
-Kar, Ito, Cole, Krekelberg - Collaboration with Krekelberg lab
+Kar K, Ito T, Cole MW, Krekelberg B (2019). Transcranial alternating current stimulation reduces BOLD adaptation and increases functional connectivity. bioRxiv. https://doi.org/10.1101/630368
 
 
 ## Primary analysis code
