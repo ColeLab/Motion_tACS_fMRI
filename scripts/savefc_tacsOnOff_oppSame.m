@@ -120,4 +120,5 @@ for subj=1:length(subjNums)
 end
 
 % Save relvant variables
-save('savefc_tacsOnOff_oppSame.mat', 'fc_tacs_on_opp', 'fc_tacs_on_same', 'fc_tacs_off_opp', 'fc_tacs_off_same', 'power11')
+save('savefc_tacsOnOff_oppSame.mat', 'fc_tacs_on_opp', 'fc_tacs_on_same', 'fc_tacs_off_opp', 'fc_tacs_off_same', ...
+    'gbc_tacs_on_opp', 'gbc_tacs_on_same', 'gbc_tacs_off_opp', 'gbc_tacs_off_same', 'power11')
